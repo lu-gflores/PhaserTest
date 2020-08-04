@@ -2,9 +2,7 @@ class TitleScene extends Phaser.Scene {
     constructor() {
         super('Title');
     }
-    preload() {
-
-    }
+   
     create() {
         //create title
         this.titleText = this.add.text(
