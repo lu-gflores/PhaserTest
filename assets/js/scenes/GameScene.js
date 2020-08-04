@@ -7,30 +7,43 @@ class GameScene extends Phaser.Scene {
     }
     create() {
      
-        this.goldPickUpAudio = this.sound.add('goldSound', { loop: false, volume: 0.2 })
-       
-        /* Difference between sprite and image objects:
-        -cannot animate image since it will not have an animate component
-        -sprite can be animated
-        */
-     
-        this.chest = new Chest (this, 300, 300, 'items', 0)
-
-        this.wall = this.physics.add.image(500, 100, 'button1')
-        this.wall.setImmovable();
-
-        this.player = new Player(this, 32, 32, 'characters', 0);
-        
-
-        this.physics.add.collider(this.player, this.wall)
-        this.physics.add.overlap(this.player, this.chest, this.collectChest, null, this)
-        //detects user input on keyboard
-        this.cursors = this.input.keyboard.createCursorKeys();
-
+        this.createAudio();
+        this.createChest();
+        this.createWalls();
+        this.createPlayer();
+        this.addCollisions();
+        this.createInput();
     }
 
     update() {
         this.player.update(this.cursors);
+    }
+    createAudio() {
+        this.goldPickUpAudio = this.sound.add('goldSound', { loop: false, volume: 0.2 })
+       
+    }
+
+    createPlayer() {
+        this.player = new Player(this, 32, 32, 'characters', 0);
+    }
+
+    createChest() {
+        this.chest = new Chest (this, 300, 300, 'items', 0)
+    }
+
+    createWalls() {
+        this.wall = this.physics.add.image(500, 100, 'button1')
+        this.wall.setImmovable();
+    }
+
+    createInput(){
+        //detects user input on keyboard
+        this.cursors = this.input.keyboard.createCursorKeys();
+    }
+
+    addCollisions() {
+        this.physics.add.collider(this.player, this.wall)
+        this.physics.add.overlap(this.player, this.chest, this.collectChest, null, this) 
     }
     
     collectChest(player, chest) {
