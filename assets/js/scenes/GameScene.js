@@ -3,14 +3,14 @@ class GameScene extends Phaser.Scene {
         super('Game');
     }
     create() {
-        const button = this.add.image(100, 100, 'button1') //cant animate image
+     
         const goldPickUpAudio = this.sound.add('goldSound', { loop: false, volume: 0.2 })
-        button.setOrigin(0.5, 0.5)
+       
         /* Difference between sprite and image objects:
         -cannot animate image since it will not have an animate component
         -sprite can be animated
         */
-        this.add.sprite(300, 100, 'button1')
+     
         this.chest = new Chest (this, 300, 300, 'items', 0)
 
         this.wall = this.physics.add.image(500, 100, 'button1')
