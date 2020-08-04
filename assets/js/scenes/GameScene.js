@@ -7,7 +7,7 @@ class GameScene extends Phaser.Scene {
     }
     create() {
      
-        const goldPickUpAudio = this.sound.add('goldSound', { loop: false, volume: 0.2 })
+        this.goldPickUpAudio = this.sound.add('goldSound', { loop: false, volume: 0.2 })
        
         /* Difference between sprite and image objects:
         -cannot animate image since it will not have an animate component
@@ -23,10 +23,7 @@ class GameScene extends Phaser.Scene {
         
 
         this.physics.add.collider(this.player, this.wall)
-        this.physics.add.overlap(this.player, this.chest, function (player, chest) {
-            goldPickUpAudio.play();
-            chest.destroy();
-        })
+        this.physics.add.overlap(this.player, this.chest, this.collectChest, null, this)
         //detects user input on keyboard
         this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -35,5 +32,11 @@ class GameScene extends Phaser.Scene {
     update() {
         this.player.update(this.cursors);
     }
-   
+    
+    collectChest(player, chest) {
+        this.goldPickUpAudio.play();
+        //updates score in UI
+        this.events.emit('updateScore', chest.coins);
+        chest.destroy();
+    }
 }
