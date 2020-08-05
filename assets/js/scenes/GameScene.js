@@ -10,8 +10,6 @@ class GameScene extends Phaser.Scene {
         this.createMap();
         this.createAudio();
         this.createChest();
-        this.createPlayer();
-        this.addCollisions();
         this.createInput();
 
         this.createGameManager();
@@ -19,15 +17,15 @@ class GameScene extends Phaser.Scene {
     }
 
     update() {
-        this.player.update(this.cursors);
+        if(this.player) this.player.update(this.cursors);
     }
     createAudio() {
         this.goldPickUpAudio = this.sound.add('goldSound', { loop: false, volume: 0.2 })
 
     }
 
-    createPlayer() {
-        this.player = new Player(this, 224, 224, 'characters', 0);
+    createPlayer(location) {
+        this.player = new Player(this, location[0] * 2, location[1] * 2, 'characters', 0);
     }
 
     createChest() {
@@ -80,7 +78,12 @@ class GameScene extends Phaser.Scene {
         this.map = new Map(this, 'map', 'background', 'background', 'blocked' )
     }
     createGameManager() {
+        this.events.on('spawnPlayer', (location) => {
+            this.createPlayer(location);
+            this.addCollisions();
+        })
         this.gameManager = new GameManager(this, this.map.map.objects)
         this.gameManager.setup();
+
     }
 }
