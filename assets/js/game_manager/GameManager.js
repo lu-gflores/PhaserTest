@@ -41,8 +41,6 @@ class GameManager {
                 });
             }
         });
-
-
     }
     setupEventListeners() {
 
