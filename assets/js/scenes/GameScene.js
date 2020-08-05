@@ -14,6 +14,8 @@ class GameScene extends Phaser.Scene {
         this.addCollisions();
         this.createInput();
 
+        this.createGameManager();
+
     }
 
     update() {
@@ -40,7 +42,7 @@ class GameScene extends Phaser.Scene {
     spawnChest() {
         const location = this.chestPositions[Math.floor(Math.random() * this.chestPositions.length)]
         let chest = this.chests.getFirstDead();
-        console.log(chest);
+        
         if (!chest) {
             const chest = this.chest = new Chest(this, location[0], location[1], 'items', 0)
             this.chests.add(chest) //adding chest to chest group  
@@ -76,5 +78,9 @@ class GameScene extends Phaser.Scene {
     }
     createMap() {
         this.map = new Map(this, 'map', 'background', 'background', 'blocked' )
+    }
+    createGameManager() {
+        this.gameManager = new GameManager(this, this.map.map.objects)
+        this.gameManager.setup();
     }
 }
