@@ -17,7 +17,9 @@ const config = {
                 y: 0,
             }
         }
-    }
+    },
+    pixelArt: true,
+    roundPixels: true
 }
 
 const game = new Phaser.Game(config);
