@@ -7,13 +7,13 @@ class GameScene extends Phaser.Scene {
         this.score = 0;
     }
     create() {
-
+        this.createMap();
         this.createAudio();
         this.createChest();
-        this.createWalls();
         this.createPlayer();
         this.addCollisions();
         this.createInput();
+
     }
 
     update() {
@@ -50,11 +50,7 @@ class GameScene extends Phaser.Scene {
         }
     }
 
-    createWalls() {
-        this.wall = this.physics.add.image(500, 100, 'button1')
-        this.wall.setImmovable();
-    }
-
+    
     createInput() {
         //detects user input on keyboard
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -72,10 +68,23 @@ class GameScene extends Phaser.Scene {
 
         //updates score in UI
         this.events.emit('updateScore', this.score);
-        
+
         chest.makeInactive();
 
         //spawn new chest
         this.time.delayedCall(1000, this.spawnChest, [], this)
+    }
+    createMap() {
+        //create tile map
+        this.map = this.make.tilemap({ key: 'map' })
+        //add tileset image to map
+        this.tiles = this.map.addTilesetImage('background', 'background', 32, 32, 1, 2)
+
+        //background layer
+        this.backgroundLayer = this.map.createStaticLayer('background', this.tiles, 0, 0);
+        this.backgroundLayer.setScale(2)
+
+        this.blockedLayer = this.map.createStaticLayer('blocked', this.tiles, 0, 0)
+        this.blockedLayer.setScale(2)
     }
 }
