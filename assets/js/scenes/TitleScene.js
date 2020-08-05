@@ -11,8 +11,8 @@ class TitleScene extends Phaser.Scene {
             'Zenva MMORPG', 
             {fontSize: '64px',
             fill: '#fff'
-        } )
-        this.titleText.setOrigin(0.5)
+        });
+        this.titleText.setOrigin(0.5);
 
         this.startGameButton =  new UIButton(this, 
             this.scale.width /  2, 

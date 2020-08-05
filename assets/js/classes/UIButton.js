@@ -15,12 +15,12 @@ class UIButton extends Phaser.GameObjects.Container {
     }
 
     createButton() {
-        this.button = this.add.image(0, 0, 'button1')
+        this.button = this.scene.add.image(0, 0, 'button1')
         this.button.setInteractive();
         this.button.setScale(1.4)
 
         //create button text
-        this.buttonText = this.add.text(0, 0, this.text, { fontSize: '26px', fill: '#fff' });
+        this.buttonText = this.scene.add.text(0, 0, this.text, { fontSize: '26px', fill: '#fff' });
         Phaser.Display.Align.In.Center(this.buttonText, this.button);
 
         this.add(this.button)
