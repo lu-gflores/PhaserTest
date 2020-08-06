@@ -46,6 +46,9 @@ class GameScene extends Phaser.Scene {
         }
     }
 
+    spawnMonster(monster) {
+        console.log(monster)
+    }
     
     createInput() {
         //detects user input on keyboard
@@ -79,6 +82,10 @@ class GameScene extends Phaser.Scene {
         })
         this.events.on('chestSpawned', (chest) => {
             this.spawnChest(chest)
+        })
+
+        this.events.on('monsterSpawned', (monster) => {
+            this.spawnMonster(monster)
         })
         this.gameManager = new GameManager(this, this.map.map.objects)
         this.gameManager.setup();
