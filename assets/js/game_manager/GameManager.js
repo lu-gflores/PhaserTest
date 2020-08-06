@@ -57,9 +57,17 @@ class GameManager {
             this.spawners[spawner.id] =  spawner
         })
     }
+
     spawnPlayer() {
         const location = this.playerLocations[Math.floor(Math.random() * this.playerLocations.length)]
         this.scene.events.emit('spawnPlayer', location)
+    }
+
+    addChest(id, chest) {
+        this.chests[id] =  chest;
+        console.log(chest)
+    }
+    deleteChest() {
 
     }
 }
