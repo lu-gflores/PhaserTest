@@ -9,7 +9,7 @@ class GameScene extends Phaser.Scene {
     create() {
         this.createMap();
         this.createAudio();
-        this.createChest();
+        this.createGroups();
         this.createInput();
 
         this.createGameManager();
@@ -28,24 +28,20 @@ class GameScene extends Phaser.Scene {
         this.player = new Player(this, location[0] * 2, location[1] * 2, 'characters', 0);
     }
 
-    createChest() {
+    createGroups() {
         this.chests = this.physics.add.group();
-        this.chestPositions = [[100, 100], [200, 200], [300, 300], [400, 400], [500, 500]]
-
-        this.maxNumberOfChests = 3;
-        for (let i = 0; i < this.maxNumberOfChests; i += 1) {
-            this.spawnChest();
-        }
+        
     }
-    spawnChest() {
-        const location = this.chestPositions[Math.floor(Math.random() * this.chestPositions.length)]
+    spawnChest(chestObject) {
         let chest = this.chests.getFirstDead();
         
         if (!chest) {
-            const chest = this.chest = new Chest(this, location[0], location[1], 'items', 0)
+            const chest = this.chest = new Chest(this, chestObject.x *2, chestObject.y * 2, 'items', 0, chestObject.gold, chestObject.id)
             this.chests.add(chest) //adding chest to chest group  
         } else {
-            chest.setPosition(location[0], location[1]);
+            chest.coins = chestObject.gold
+            chest.id = chestObject.id
+            chest.setPosition(chestObject.x *2, chestObject.y * 2);
             chest.makeActive();
         }
     }
@@ -71,8 +67,7 @@ class GameScene extends Phaser.Scene {
 
         chest.makeInactive();
 
-        //spawn new chest
-        this.time.delayedCall(1000, this.spawnChest, [], this)
+        this.events.emit('pickUpChest', chest.id)
     }
     createMap() {
         this.map = new Map(this, 'map', 'background', 'background', 'blocked' )
@@ -81,6 +76,9 @@ class GameScene extends Phaser.Scene {
         this.events.on('spawnPlayer', (location) => {
             this.createPlayer(location);
             this.addCollisions();
+        })
+        this.events.on('chestSpawned', (chest) => {
+            this.spawnChest(chest)
         })
         this.gameManager = new GameManager(this, this.map.map.objects)
         this.gameManager.setup();
