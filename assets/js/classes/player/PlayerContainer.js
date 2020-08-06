@@ -33,33 +33,65 @@ class PlayerContainer extends Phaser.GameObjects.Container {
 
         //weapon object
         this.weapon =  this.scene.add.image(40, 0, 'items', 4);
-        this.scene.add.existing(this.weapon)
-        this.weapon.setScale(1.5)
-        this.scene.physics.world.enable(this.weapon)
-        this.add(this.weapon)
-        this.weapon.alpha = 1 //display only for testing
+        this.scene.add.existing(this.weapon);
+        this.weapon.setScale(1.5);
+        this.scene.physics.world.enable(this.weapon);
+        this.add(this.weapon);
+        this.weapon.alpha = 0; //display only for testing
     }
     update(cursors) {
         this.body.setVelocity(0);
 
         if (cursors.left.isDown) {
             this.body.setVelocityX(-this.velocity);
-            this.currentDirection = Direction.LEFT
+            this.currentDirection = Direction.LEFT;
             this.weapon.setPosition(-40, 0)
         } else if (cursors.right.isDown) {
-            this.currentDirection = Direction.RIGHT
             this.body.setVelocityX(this.velocity);
+            this.currentDirection = Direction.RIGHT;
             this.weapon.setPosition(40, 0)
         }
 
         if (cursors.up.isDown) {
-            this.currentDirection = Direction.UP
             this.body.setVelocityY(-this.velocity);
+            this.currentDirection = Direction.UP;
             this.weapon.setPosition(0, -40)
         } else if (cursors.down.isDown) {
-            this.currentDirection = Direction.DOWN
             this.body.setVelocityY(this.velocity);
+            this.currentDirection = Direction.DOWN;
             this.weapon.setPosition(0, 40)
+        }
+        //display weapon once the user hits the spacebar
+        if(Phaser.Input.Keyboard.JustDown(cursors.space) && !this.playerAttacking) {
+            this.weapon.alpha = 1;
+            this.playerAttacking = true;
+            this.scene.time.delayedCall(150, ()=> {
+                this.weapon.alpha = 0;
+                this.playerAttacking = false;
+                this.swordHit = false;
+            }, [], this)
+        }
+
+
+        if(this.playerAttacking) {
+            if(this.weapon.flipX) {
+                this.weapon.angle -= 10;
+            } else {
+                this.weapon.angle += 10;
+            }
+        } else{
+            if(this.currentDirection === Direction.DOWN) {
+                this.weapon.setAngle(-270); //number of degrees to rotate game object
+            } else if (this.currentDirection === Direction.UP) {
+                this.weapon.setAngle(-90);
+            } else{
+                this.weapon.setAngle(0);
+            }
+
+            this.weapon.flipX = false;
+            if(this.currentDirection === Direction.LEFT) {
+                this.weapon.flipX = true;
+            }
         }
     }
 }
