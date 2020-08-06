@@ -17,7 +17,7 @@ class GameScene extends Phaser.Scene {
     }
 
     update() {
-        if(this.player) this.player.update(this.cursors);
+        if (this.player) this.player.update(this.cursors);
     }
     createAudio() {
         this.goldPickUpAudio = this.sound.add('goldSound', { loop: false, volume: 0.2 })
@@ -30,26 +30,40 @@ class GameScene extends Phaser.Scene {
 
     createGroups() {
         this.chests = this.physics.add.group();
-        
+        this.monsters = this.physics.add.group();
+
     }
     spawnChest(chestObject) {
         let chest = this.chests.getFirstDead();
-        
+
         if (!chest) {
-            const chest = this.chest = new Chest(this, chestObject.x *2, chestObject.y * 2, 'items', 0, chestObject.gold, chestObject.id)
+            chest = this.chest = new Chest(this, chestObject.x * 2, chestObject.y * 2, 'items', 0, chestObject.gold, chestObject.id)
             this.chests.add(chest) //adding chest to chest group  
         } else {
             chest.coins = chestObject.gold
             chest.id = chestObject.id
-            chest.setPosition(chestObject.x *2, chestObject.y * 2);
+            chest.setPosition(chestObject.x * 2, chestObject.y * 2);
             chest.makeActive();
         }
     }
 
-    spawnMonster(monster) {
-        console.log(monster)
+    spawnMonster(monsterObject) {
+
+        let monster = this.monsters.getFirstDead();
+
+        if (!monster) {
+            monster = new Monster(this, monsterObject.x * 2, monsterObject.y * 2, 'monsters', monsterObject.frame, monsterObject.health, monsterObject.maxHealth)
+            this.monsters.add(monster) //adding chest to chest group  
+        } else {
+            monster.id = monsterObject.id
+            monster.health = monsterObject.health
+            monster.maxHealth = monsterObject.maxHealth
+            monster.setTexture('monsters', monsterObject.frame)
+            monster.setPosition(monsterObject.x * 2, monsterObject.y * 2);
+            monster.makeActive();
+        }
     }
-    
+
     createInput() {
         //detects user input on keyboard
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -73,7 +87,7 @@ class GameScene extends Phaser.Scene {
         this.events.emit('pickUpChest', chest.id)
     }
     createMap() {
-        this.map = new Map(this, 'map', 'background', 'background', 'blocked' )
+        this.map = new Map(this, 'map', 'background', 'background', 'blocked')
     }
     createGameManager() {
         this.events.on('spawnPlayer', (location) => {
