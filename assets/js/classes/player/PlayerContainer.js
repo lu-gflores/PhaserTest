@@ -46,10 +46,12 @@ class PlayerContainer extends Phaser.GameObjects.Container {
             this.body.setVelocityX(-this.velocity);
             this.currentDirection = Direction.LEFT;
             this.weapon.setPosition(-40, 0)
+            this.player.flipX = false
         } else if (cursors.right.isDown) {
             this.body.setVelocityX(this.velocity);
             this.currentDirection = Direction.RIGHT;
             this.weapon.setPosition(40, 0)
+            this.player.flipX = true
         }
 
         if (cursors.up.isDown) {
@@ -63,6 +65,7 @@ class PlayerContainer extends Phaser.GameObjects.Container {
         }
         //display weapon once the user hits the spacebar
         if(Phaser.Input.Keyboard.JustDown(cursors.space) && !this.playerAttacking) {
+            console.log('attacking')
             this.weapon.alpha = 1;
             this.playerAttacking = true;
             this.scene.time.delayedCall(150, ()=> {
@@ -72,7 +75,7 @@ class PlayerContainer extends Phaser.GameObjects.Container {
             }, [], this)
         }
 
-
+        //animate weapon
         if(this.playerAttacking) {
             if(this.weapon.flipX) {
                 this.weapon.angle -= 10;
