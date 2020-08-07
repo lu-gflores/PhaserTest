@@ -48,7 +48,7 @@ class GameManager {
             if (this.chests[chestId]) {
                 this.spawners[this.chests[chestId].spawnerId].removeObject[chestId]
             }
-        })
+        });
 
         this.scene.events.on('monsterAttacked', (monsterId) => {
             if (this.monsters[monsterId]) {
@@ -59,7 +59,7 @@ class GameManager {
                     this.scene.events.emit('monsterRemoved', monsterId);
                 }    
             }
-        })
+        });
     }
 
 

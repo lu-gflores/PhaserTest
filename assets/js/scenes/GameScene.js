@@ -76,14 +76,15 @@ class GameScene extends Phaser.Scene {
         this.physics.add.overlap(this.player.weapon, this.monsters, this.enemyOverlap, null, this);
 
     }
-    enemyOverlap(player, enemy) {
+
+    enemyOverlap(weapon, enemy) {
         if (this.player.playerAttacking && !this.player.swordHit) {
             this.player.swordHit = true;
-           
             this.events.emit('monsterAttacked', enemy.id, this.player.id);
         }
 
     }
+
     collectChest(player, chest) {
         this.goldPickUpAudio.play();
 
@@ -103,14 +104,14 @@ class GameScene extends Phaser.Scene {
         this.events.on('spawnPlayer', (location) => {
             this.createPlayer(location);
             this.addCollisions();
-        })
+        });
         this.events.on('chestSpawned', (chest) => {
             this.spawnChest(chest)
-        })
+        });
 
         this.events.on('monsterSpawned', (monster) => {
             this.spawnMonster(monster)
-        })
+        });
 
         this.events.on('monsterRemoved', (monsterId) => {
             this.monsters.getChildren().forEach((monster) => {
@@ -118,7 +119,8 @@ class GameScene extends Phaser.Scene {
                     monster.makeInactive();
                 }
             });
-        })
+        });
+
         this.gameManager = new GameManager(this, this.map.map.objects);
         this.gameManager.setup();
 
