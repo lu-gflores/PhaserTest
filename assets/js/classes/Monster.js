@@ -14,6 +14,13 @@ class Monster extends Phaser.Physics.Arcade.Image {
         //Checks for collisions based on camera
         this.setCollideWorldBounds(true)
         this.scene.add.existing(this)
+        this.createHealthBar()
+    }
+
+    createHealthBar() {
+        this.healthBar =  this.scene.add.graphics()
+        this.healthBar.fillStyle(0xffffff, 1)
+        this.healthBar.fillRect(this.x, this.y - 8, 64, 5)
     }
 
     makeActive() {

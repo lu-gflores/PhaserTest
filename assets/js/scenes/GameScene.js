@@ -123,6 +123,5 @@ class GameScene extends Phaser.Scene {
 
         this.gameManager = new GameManager(this, this.map.map.objects);
         this.gameManager.setup();
-
     }
 }
