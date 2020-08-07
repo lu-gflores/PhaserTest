@@ -1,20 +1,20 @@
 class GameManager {
     constructor(scene, mapData) {
-        this.scene = scene
-        this.mapData = mapData
+        this.scene = scene;
+        this.mapData = mapData;
 
-        this.spawners = {}
-        this.chests = {}
-        this.monsters= {}
-        this.playerLocations = []
-        this.chestLocations = {}
-        this.monsterLocations = {}
+        this.spawners = {};
+        this.chests = {};
+        this.monsters= {};
+        this.playerLocations = [];
+        this.chestLocations = {};
+        this.monsterLocations = {};
     }
     setup() {
         this.parseMapData();
-        this.setupEventListeners()
-        this.setupSpawners()
-        this.spawnPlayer()
+        this.setupEventListeners();
+        this.setupSpawners();
+        this.spawnPlayer();
     }
     parseMapData() {
         this.mapData.forEach(layer => {
@@ -52,11 +52,11 @@ class GameManager {
 
         this.scene.events.on('monsterAttacked', (monsterId) => {
             if (this.monsters[monsterId]) {
-                this.monsters[monsterId].loseHealth()
+                this.monsters[monsterId].loseHealth();
                 
                 if(this.monsters[monsterId].health <= 0) {
-                    this.spawners[this.monsters[monsterId].spawnerId].removeObject[monsterId]
-                    this.scene.events.emit('monsterRemoved', monsterId)
+                    this.spawners[this.monsters[monsterId].spawnerId].removeObject[monsterId];
+                    this.scene.events.emit('monsterRemoved', monsterId);
                 }    
             }
         })

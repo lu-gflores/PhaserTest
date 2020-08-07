@@ -52,13 +52,13 @@ class GameScene extends Phaser.Scene {
         let monster = this.monsters.getFirstDead();
 
         if (!monster) {
-            monster = new Monster(this, monsterObject.x * 2, monsterObject.y * 2, 'monsters', monsterObject.frame, monsterObject.health, monsterObject.maxHealth)
-            this.monsters.add(monster) //adding chest to chest group  
+            monster = new Monster(this, monsterObject.x * 2, monsterObject.y * 2, 'monsters', monsterObject.frame, monsterObject.health, monsterObject.maxHealth);
+            this.monsters.add(monster);//adding chest to chest group  
         } else {
-            monster.id = monsterObject.id
-            monster.health = monsterObject.health
-            monster.maxHealth = monsterObject.maxHealth
-            monster.setTexture('monsters', monsterObject.frame)
+            monster.id = monsterObject.id;
+            monster.health = monsterObject.health;
+            monster.maxHealth = monsterObject.maxHealth;
+            monster.setTexture('monsters', monsterObject.frame);
             monster.setPosition(monsterObject.x * 2, monsterObject.y * 2);
             monster.makeActive();
         }
@@ -70,17 +70,17 @@ class GameScene extends Phaser.Scene {
     }
 
     addCollisions() {
-        this.physics.add.collider(this.player, this.map.blockedLayer)
-        this.physics.add.overlap(this.player, this.chests, this.collectChest, null, this)
-        this.physics.add.collider(this.monsters, this.map.blockedLayer)
-        this.physics.add.overlap(this.player.weapon, this.monsters, this.enemyOverlap, null, this)
+        this.physics.add.collider(this.player, this.map.blockedLayer);
+        this.physics.add.overlap(this.player, this.chests, this.collectChest, null, this);
+        this.physics.add.collider(this.monsters, this.map.blockedLayer);
+        this.physics.add.overlap(this.player.weapon, this.monsters, this.enemyOverlap, null, this);
 
     }
-    enemyOverlap(weapon, enemy) {
+    enemyOverlap(player, enemy) {
         if (this.player.playerAttacking && !this.player.swordHit) {
-            this.player.swordHit = true
+            this.player.swordHit = true;
            
-            this.events.emit('monsterAttacked', enemy.id), this.player.id
+            this.events.emit('monsterAttacked', enemy.id, this.player.id);
         }
 
     }
@@ -113,13 +113,13 @@ class GameScene extends Phaser.Scene {
         })
 
         this.events.on('monsterRemoved', (monsterId) => {
-            this.monsters.getChildren().forEach(monster => {
+            this.monsters.getChildren().forEach((monster) => {
                 if(monster.id === monsterId) {
-                    monster.makeInactive()
+                    monster.makeInactive();
                 }
             });
         })
-        this.gameManager = new GameManager(this, this.map.map.objects)
+        this.gameManager = new GameManager(this, this.map.map.objects);
         this.gameManager.setup();
 
     }
