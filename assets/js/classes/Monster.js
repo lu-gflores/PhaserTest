@@ -4,7 +4,7 @@ class Monster extends Phaser.Physics.Arcade.Image {
         this.scene =  scene
         this.id = id
         this.health = health
-        this.maxHealth = health
+        this.maxHealth = maxHealth
 
         //enable physics
         this.scene.physics.world.enable(this);
@@ -31,9 +31,9 @@ class Monster extends Phaser.Physics.Arcade.Image {
         this.healthBar.fillGradientStyle(0xff0000, 0xffffff, 4)
         this.healthBar.fillRect(this.x, this.y - 8, 64 * (this.health / this.maxHealth), 5)
     }
-    updateHealth() {
-        this.health = this.health
-
+    updateHealth(health) {
+        this.health = health;
+        this.updateHealthBar();
     }
 
     makeActive() {
