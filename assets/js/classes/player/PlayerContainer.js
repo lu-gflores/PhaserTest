@@ -9,16 +9,16 @@ class PlayerContainer extends Phaser.GameObjects.Container {
         super(scene, x, y);
         this.scene = scene;
         this.velocity = 160;
-        this.currentDirection = Direction.RIGHT
-        this.playerAttacking = false
-        this.flipX = true
-        this.swordHit = false
-        this.health = health
-        this.maxHealth = maxHealth
-        this.id = id
+        this.currentDirection = Direction.RIGHT;
+        this.playerAttacking = false;
+        this.flipX = true;
+        this.swordHit = false;
+        this.health = health;
+        this.maxHealth = maxHealth;
+        this.id = id;
 
         //size on container
-        this.setSize(64, 64)
+        this.setSize(64, 64);
         //enable physics
         this.scene.physics.world.enable(this);
     

@@ -1,10 +1,10 @@
 class Monster extends Phaser.Physics.Arcade.Image {
     constructor(scene, x, y, key, frame, id, health, maxHealth) {
-        super(scene, x, y, key, frame)
-        this.scene =  scene
-        this.id = id
-        this.health = health
-        this.maxHealth = maxHealth
+        super(scene, x, y, key, frame);
+        this.scene =  scene;
+        this.id = id;
+        this.health = health;
+        this.maxHealth = maxHealth;
 
         //enable physics
         this.scene.physics.world.enable(this);
@@ -48,5 +48,8 @@ class Monster extends Phaser.Physics.Arcade.Image {
         this.setVisible(false);
         this.body.checkCollision.none = true;
         this.healthBar.clear();
+    }
+    update() {
+        this.updateHealthBar();
     }
 }

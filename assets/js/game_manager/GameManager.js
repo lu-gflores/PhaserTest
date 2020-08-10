@@ -64,6 +64,7 @@ class GameManager {
             if (this.monsters[monsterId]) {
                 const { gold, attack } = this.monsters[monsterId];
 
+                //player damaging monster
                 this.monsters[monsterId].loseHealth();
 
                 if (this.monsters[monsterId].health <= 0) {
@@ -75,17 +76,17 @@ class GameManager {
                     this.scene.events.emit('monsterRemoved', monsterId);
 
                     this.players[playerId].updateHealth(2);
-                    his.scene.events.emit('updatePlayerHealth', playerId, this.players[playerId].health);
+                    this.scene.events.emit('updatePlayerHealth', playerId, this.players[playerId].health);
                 } else {
                     //updating player's health
                     this.players[playerId].updateHealth(-attack);
                     this.scene.events.emit('updatePlayerHealth', playerId, this.players[playerId].health);
-
+                    //update monster health
                     this.scene.events.emit('updateMonsterHealth', monsterId, this.monsters[monsterId].health);
 
                     //check player health, if 0 respawn player and take half their gold away
                     if(this.players[playerId].health <= 0) {
-                        this.players[playerId].updateGold(parseInt9-this.players[playerId].gold / 2, 10);
+                        this.players[playerId].updateGold(parseInt(-this.players[playerId].gold / 2), 10);
                         this.scene.events.emit('updateScore', this.players[playerId].gold);
 
                         this.players[playerId].respawn();

@@ -1,10 +1,10 @@
 class MonsterModel {
     constructor(x, y, gold, spawnerId, frame, health, attack) {
-        this.id = `${spawnerId}-${uuid.v4()}`
-        this.spawnerId = spawnerId
-        this.x = x * 2
-        this.y = y * 2
-        this.gold = gold
+        this.id = `${spawnerId}-${uuid.v4()}`;
+        this.spawnerId = spawnerId;
+        this.x = x * 2;
+        this.y = y * 2;
+        this.gold = gold;
         this.frame =  frame;
         this.health = health;
         this.maxHealth =  health;
@@ -12,7 +12,7 @@ class MonsterModel {
     }
     
     loseHealth() {
-        console.log(this.health);
         this.health -= 1;
+        console.log(this.health);
     }
 }
