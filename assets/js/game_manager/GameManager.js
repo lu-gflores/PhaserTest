@@ -67,7 +67,6 @@ class GameManager {
                 this.monsters[monsterId].loseHealth();
 
                 if (this.monsters[monsterId].health <= 0) {
-
                     //update player's gold
                     this.players[playerId].updateGold(gold);
                     this.scene.events.emit('updateScore', this.players[playerId].gold);
@@ -79,6 +78,15 @@ class GameManager {
                     this.scene.events.emit('updatePlayerHealth', playerId, this.players[playerId].health);
 
                     this.scene.events.emit('updateMonsterHealth', monsterId, this.monsters[monsterId].health);
+
+                    //check player health, if 0 respawn player and take half their gold away
+                    if(this.players[playerId].health <= 0) {
+                        this.players[playerId].updateGold(parseInt9-this.players[playerId].gold / 2, 10);
+                        this.scene.events.emit('updateScore', this.players[playerId].gold);
+
+                        this.players[playerId].respawn();
+                        this.scene.events.emit('respawnPlayer', this.players[playerId]);
+                    }
                 }
             }
         });
