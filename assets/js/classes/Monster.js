@@ -20,31 +20,32 @@ class Monster extends Phaser.Physics.Arcade.Image {
     }
 
     createHealthBar() {
-        this.healthBar =  this.scene.add.graphics()
-        this.updateHealthBar()
+        this.healthBar =  this.scene.add.graphics();
+        this.updateHealthBar();
     }
 
-    updateHealthBar () {
+    updateHealthBar() {
         this.healthBar.clear();
-        this.healthBar.fillStyle(0xffffff, 1)
-        this.healthBar.fillRect(this.x, this.y - 8, 64, 5)
-        this.healthBar.fillGradientStyle(0xff0000, 0xffffff, 4)
-        this.healthBar.fillRect(this.x, this.y - 8, 64 * (this.health / this.maxHealth), 5)
-    }
+        this.healthBar.fillStyle(0xffffff, 1);
+        this.healthBar.fillRect(this.x, this.y - 8, 64, 5);
+        this.healthBar.fillGradientStyle(0xff0000, 0xffffff, 4);
+        this.healthBar.fillRect(this.x, this.y - 8, 64 * (this.health / this.maxHealth), 5);
+    }  
+
     updateHealth(health) {
         this.health = health;
         this.updateHealthBar();
     }
 
     makeActive() {
-        this.setActive(true)
-        this.setVisible(true)
+        this.setActive(true);
+        this.setVisible(true);
         this.body.checkCollision.none = false;
-        this.updateHealthBar()
+        this.updateHealthBar();
     }   
     makeInactive() {
-        this.setActive(false)
-        this.setVisible(false)
+        this.setActive(false);
+        this.setVisible(false);
         this.body.checkCollision.none = true;
         this.healthBar.clear();
     }

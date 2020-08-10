@@ -6,9 +6,9 @@ class MonsterModel {
         this.y = y * 2
         this.gold = gold
         this.frame =  frame;
-        this.health = health
-        this.maxHealth =  health
-        this.attack = attack
+        this.health = health;
+        this.maxHealth =  health;
+        this.attack = attack;
     }
     
     loseHealth() {

@@ -24,8 +24,17 @@ class GameScene extends Phaser.Scene {
 
     }
 
-    createPlayer(location) {
-        this.player = new PlayerContainer(this, location[0] * 2, location[1] * 2, 'characters', 0);
+    createPlayer(playerObject) {
+        this.player = new PlayerContainer(
+            this,
+            playerObject.x * 2, 
+            playerObject.y * 2, 
+            'characters', 
+            0,
+            playerObject.health,
+            playerObject.maxHealth,
+            playerObject.id
+            );
     }
 
     createGroups() {
@@ -70,14 +79,16 @@ class GameScene extends Phaser.Scene {
     }
 
     addCollisions() {
+        //check collisions for player and blocked tile; checks for collision between player and chest
         this.physics.add.collider(this.player, this.map.blockedLayer);
         this.physics.add.overlap(this.player, this.chests, this.collectChest, null, this);
+
         this.physics.add.collider(this.monsters, this.map.blockedLayer);
         this.physics.add.overlap(this.player.weapon, this.monsters, this.enemyOverlap, null, this);
 
     }
 
-    enemyOverlap(weapon, enemy) {
+    enemyOverlap(player, enemy) {
         if (this.player.playerAttacking && !this.player.swordHit) {
             this.player.swordHit = true;
             this.events.emit('monsterAttacked', enemy.id, this.player.id);
@@ -101,8 +112,8 @@ class GameScene extends Phaser.Scene {
         this.map = new Map(this, 'map', 'background', 'background', 'blocked')
     }
     createGameManager() {
-        this.events.on('spawnPlayer', (location) => {
-            this.createPlayer(location);
+        this.events.on('spawnPlayer', (playerObject) => {
+            this.createPlayer(playerObject);
             this.addCollisions();
         });
         this.events.on('chestSpawned', (chest) => {
