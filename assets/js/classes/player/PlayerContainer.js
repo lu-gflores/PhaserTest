@@ -119,5 +119,6 @@ class PlayerContainer extends Phaser.GameObjects.Container {
                 this.weapon.flipX = true;
             }
         }
+        this.updateHealthBar();
     }
 }

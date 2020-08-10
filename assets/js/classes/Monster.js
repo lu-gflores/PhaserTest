@@ -12,11 +12,11 @@ class Monster extends Phaser.Physics.Arcade.Image {
         this.setImmovable(false);
         this.setScale(2);
         //Checks for collisions based on camera
-        this.setCollideWorldBounds(true)
-        this.scene.add.existing(this)
-        this.setOrigin(0)
+        this.setCollideWorldBounds(true);
+        this.scene.add.existing(this);
+        this.setOrigin(0);
 
-        this.createHealthBar()
+        this.createHealthBar();
     }
 
     createHealthBar() {

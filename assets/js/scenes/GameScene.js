@@ -141,6 +141,10 @@ class GameScene extends Phaser.Scene {
             });
         });
 
+        this.events.on('updatePlayerHealth', (playerId, health) => {
+           this.player.updateHealth(health);
+        });
+
         this.gameManager = new GameManager(this, this.map.map.objects);
         this.gameManager.setup();
     }

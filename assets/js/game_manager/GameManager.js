@@ -62,10 +62,11 @@ class GameManager {
 
         this.scene.events.on('monsterAttacked', (monsterId, playerId) => {
             if (this.monsters[monsterId]) {
+                const { gold, attack } = this.monsters[monsterId];
+
                 this.monsters[monsterId].loseHealth();
 
                 if (this.monsters[monsterId].health <= 0) {
-                    const { gold, attack } = this.monsters[monsterId];
 
                     //update player's gold
                     this.players[playerId].updateGold(gold);
@@ -75,6 +76,8 @@ class GameManager {
                     this.scene.events.emit('monsterRemoved', monsterId);
                 } else {
                     this.players[playerId].updateHealth(-attack);
+                    this.scene.events.emit('updatePlayerHealth', playerId, this.players[playerId].health);
+
                     this.scene.events.emit('updateMonsterHealth', monsterId, this.monsters[monsterId].health);
                 }
             }
