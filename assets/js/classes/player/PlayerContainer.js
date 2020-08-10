@@ -41,7 +41,7 @@ class PlayerContainer extends Phaser.GameObjects.Container {
         this.scene.physics.world.enable(this.weapon);
         this.add(this.weapon);
         this.weapon.alpha = 0; //display only for testing
-        this.createHealthBar();
+        //this.createHealthBar();
     }
     update(cursors) {
         this.body.setVelocity(0);

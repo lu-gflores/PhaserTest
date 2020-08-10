@@ -49,7 +49,7 @@ class GameManager {
     setupEventListeners() {
         this.scene.events.on('pickUpChest', (chestId) => {
             if (this.chests[chestId]) {
-                this.spawners[this.chests[chestId].spawnerId].removeObject[chestId]
+                this.spawners[this.chests[chestId].spawnerId].removeObject[chestId];
             }
         });
 
@@ -93,9 +93,9 @@ class GameManager {
     }
 
     spawnPlayer() {
-        const player = new PlayerModel(this.playerLocations)
-        this.players[player.id] = player
-        this.scene.events.emit('spawnPlayer', player)
+        const player = new PlayerModel(this.playerLocations);
+        this.players[player.id] = player;
+        this.scene.events.emit('spawnPlayer', player);
     }
     //methods for adding and deleting chests
     addChest(chestId, chest) {
