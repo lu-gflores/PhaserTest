@@ -10,4 +10,7 @@ class PlayerModel {
         [this.x, this.y] = location;
 
     }
+    updateGold(gold) {
+        this.gold += gold;
+    }
 }

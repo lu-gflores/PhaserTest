@@ -4,7 +4,7 @@ class GameScene extends Phaser.Scene {
     }
     init() {
         this.scene.launch('UI');
-        this.score = 0;
+        
     }
     create() {
         this.createMap();
@@ -99,14 +99,7 @@ class GameScene extends Phaser.Scene {
     collectChest(player, chest) {
         this.goldPickUpAudio.play();
 
-        this.score += chest.coins;
-
-        //updates score in UI
-        this.events.emit('updateScore', this.score);
-
-        chest.makeInactive();
-
-        this.events.emit('pickUpChest', chest.id)
+        this.events.emit('pickUpChest', chest.id, player.id)
     }
     createMap() {
         this.map = new Map(this, 'map', 'background', 'background', 'blocked')
@@ -122,6 +115,14 @@ class GameScene extends Phaser.Scene {
 
         this.events.on('monsterSpawned', (monster) => {
             this.spawnMonster(monster)
+        });
+
+        this.events.on('chestRemoved', (chestId) => {
+            this.chests.getChildren().forEach((chest) => {
+                if(chest.id === chestId) {
+                    chest.makeInactive();
+                }
+            });
         });
 
         this.events.on('monsterRemoved', (monsterId) => {
