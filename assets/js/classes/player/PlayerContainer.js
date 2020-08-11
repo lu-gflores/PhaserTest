@@ -5,7 +5,7 @@ const Direction = {
     DOWN: 'DOWN'
 }
 class PlayerContainer extends Phaser.GameObjects.Container {
-    constructor(scene, x, y, key, frame, health, maxHealth, id) {
+    constructor(scene, x, y, key, frame, health, maxHealth, id, attackAudio) {
         super(scene, x, y);
         this.scene = scene;
         this.velocity = 160;
@@ -16,7 +16,7 @@ class PlayerContainer extends Phaser.GameObjects.Container {
         this.health = health;
         this.maxHealth = maxHealth;
         this.id = id;
-
+        this.attackAudio = attackAudio;
         //size on container
         this.setSize(64, 64);
         //enable physics
@@ -96,6 +96,7 @@ class PlayerContainer extends Phaser.GameObjects.Container {
             console.log('attacking');
             this.weapon.alpha = 1;
             this.playerAttacking = true;
+            this.attackAudio.play();
             this.scene.time.delayedCall(150, ()=> {
                 this.weapon.alpha = 0;
                 this.playerAttacking = false;
