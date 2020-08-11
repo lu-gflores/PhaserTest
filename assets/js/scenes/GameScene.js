@@ -61,14 +61,15 @@ class GameScene extends Phaser.Scene {
         let monster = this.monsters.getFirstDead();
 
         if (!monster) {
-            monster = new Monster(this, monsterObject.x * 2, monsterObject.y * 2, 'monsters', monsterObject.frame, monsterObject.health, monsterObject.maxHealth);
-            this.monsters.add(monster);//adding chest to chest group  
+            monster = new Monster(this, monsterObject.x, monsterObject.y, 'monsters', monsterObject.frame, monsterObject.health, monsterObject.maxHealth);
+            this.monsters.add(monster);//adding chest to chest group
+            //this.monsters.setCollideWorldBounds(true);  
         } else {
             monster.id = monsterObject.id;
             monster.health = monsterObject.health;
             monster.maxHealth = monsterObject.maxHealth;
             monster.setTexture('monsters', monsterObject.frame);
-            monster.setPosition(monsterObject.x * 2, monsterObject.y * 2);
+            monster.setPosition(monsterObject.x, monsterObject.y);
             monster.makeActive();
         }
     }
@@ -93,7 +94,6 @@ class GameScene extends Phaser.Scene {
             this.player.swordHit = true;
             this.events.emit('monsterAttacked', enemy.id, this.player.id);
         }
-
     }
 
     collectChest(player, chest) {
